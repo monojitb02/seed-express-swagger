@@ -1,0 +1,75 @@
+swagger: "2.0"
+info:
+  version: "1.0.0"
+  title: Seed API microservice
+
+basePath: /api/project/service/v1
+#
+# format of bodies a client can send (Content-Type)
+consumes:
+  - application/json
+  - text/html
+  - text/plain
+# format of the responses to the client (Accepts)
+produces:
+  - application/json
+  - text/html
+  - text/plain
+paths:
+  /system/health:
+    x-swagger-router-controller: system
+    get:
+      x-anonymous: true
+      description: Provides health check status
+      operationId: getHealth
+      tags: [Sytem]
+      responses:
+        "200":
+          description: Success
+          schema:
+            $ref: "#/definitions/HealthResponse"
+  /system/version:
+    x-swagger-router-controller: system
+    get:
+      x-anonymous: true
+      description: Provides the version number of the service
+      operationId: getVersion
+      tags: [Sytem]
+      responses:
+        "200":
+          description: Success
+          schema:
+            $ref: "#/definitions/VersionResponse"
+  /hello/world:
+    x-swagger-router-controller: hello
+    get:
+      description: Sample hello world
+      operationId: helloWorld
+      tags: [Hello World]
+      responses:
+        "200":
+          description: Success
+          schema:
+            $ref: "#/definitions/HelloWorld"
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+
+# complex objects have schema definitions
+definitions:
+  VersionResponse:
+    description: Version result
+    type: string
+  HelloWorld:
+    properties:
+      success:
+        type: boolean
+      message:
+        type: string
+  HealthResponse:
+    description: Health result
+    type: string
+  ErrorResponse:
+    description: Error result
+    type: string
