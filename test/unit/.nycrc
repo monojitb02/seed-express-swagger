@@ -15,7 +15,7 @@
   "statements": 38,
   "branches": 4,
   "functions": 28,
-  "lines": 38,
+  "lines": 35,
   "watermarks":{
     "lines": [70, 80],
     "statements": [70, 80],

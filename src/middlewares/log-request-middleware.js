@@ -19,7 +19,8 @@ const logRequestMiddleware = function (req, res, next) {
     const originalReqEnd = res.end
     res.end = function (...args) {
         const endTime = new Date();
-        logContext.EndTime = endTime - startTime
+        logContext.EndTime = endTime
+        logContext.Duration = endTime - startTime
         logContext.StatusCode = res.statusCode
         availableLogger.info('End Request', logContext)
         originalReqEnd.apply(res, args)

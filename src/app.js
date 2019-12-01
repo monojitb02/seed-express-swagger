@@ -31,7 +31,13 @@ const handleError = (err, req, res, next) => {
     }
     next();
 };
-
+const securityHandler = (req, res, next) => {
+    if (!req.headers.authorization) {
+        res.status(401).send();
+        return;
+    }
+    next();
+}
 const initSwagger = async (webApiServiceUrl) => {
     const swaggerCreate = promisify(Swagger.create);
     return await swaggerCreate({
@@ -39,7 +45,9 @@ const initSwagger = async (webApiServiceUrl) => {
         swaggerFile: `${__dirname}/swagger.yaml`,
         webApiBaseUrl: webApiServiceUrl,
         swaggerSecurityHandlers: {
-            BasicAuth: () => { }
+            basicAuth: securityHandler,
+            APIKeyHeader: securityHandler,
+            APIKeyQueryParam: securityHandler,
         }
     });
 }
@@ -59,7 +67,7 @@ async function init() {
     //setup swagger ui
     app.use(SwaggerUi({
         ...swaggerExpress.runner.swagger,
-        securityDefinitions: null
+        // securityDefinitions: null
     }, {
         swaggerUi: uiPath || 'doc', //swagger ui web page
         apiDocs: rawPath || 'swagger', //api document in json format

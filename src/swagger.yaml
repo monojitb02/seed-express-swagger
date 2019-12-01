@@ -15,10 +15,18 @@ produces:
   - application/json
   - text/html
   - text/plain
+securityDefinitions:
+  basicAuth:
+    type: basic
+# To apply Basic auth to the whole API:
+security:
+  - basicAuth: []
 paths:
   /system/health:
     x-swagger-router-controller: system
     get:
+      security:
+        - {}
       x-anonymous: true
       description: Provides health check status
       operationId: getHealth
@@ -31,6 +39,8 @@ paths:
   /system/version:
     x-swagger-router-controller: system
     get:
+      security:
+        - {}
       x-anonymous: true
       description: Provides the version number of the service
       operationId: getVersion

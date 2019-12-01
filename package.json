@@ -7,8 +7,12 @@
     "lint": "eslint src",
     "test": "mocha test/unit/**/*.spec.js",
     "coverage": "nyc --nycrc-path test/unit/.nycrc mocha test/unit/**/*.spec.js",
-    "dev-start": "nodemon start",
-    "precommit": "npm run lint && npm run coverage"
+    "dev-start": "nodemon start"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm run lint && npm run coverage"
+    }
   },
   "dependencies": {
     "body-parser": "^1.18.2",
