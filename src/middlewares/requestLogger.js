@@ -1,9 +1,9 @@
 'use strict';
 const logger = require('../logger');
 
-const logRequestMiddleware = function (req, res, next) {
+module.exports = (req, res, next) => {
     // Don't log system endpoint
-    if (req.swagger.operation['x-anonymous']) {
+    if (req.openapi.operation['x-anonymous']) {
         next()
         return
     }
@@ -17,7 +17,7 @@ const logRequestMiddleware = function (req, res, next) {
 
     // Response.end is the last method called before putting the bytes on the wire
     const originalReqEnd = res.end
-    res.end = function (...args) {
+    res.end = (...args) => {
         const endTime = new Date();
         logContext.EndTime = endTime
         logContext.Duration = endTime - startTime
@@ -26,8 +26,4 @@ const logRequestMiddleware = function (req, res, next) {
         originalReqEnd.apply(res, args)
     }
     next()
-}
-
-module.exports = () => (ctx, next) => {
-    logRequestMiddleware(ctx.request, ctx.response, next)
 }

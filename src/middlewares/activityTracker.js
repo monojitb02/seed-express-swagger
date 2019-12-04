@@ -3,7 +3,7 @@ const uuid = require('uuid/v4');
 /**
  * Assign Activity and trace-level
  */
-const assignIdMiddleware = function (req, res, next) {
+module.exports = (req, res, next) => {
     let activityId = req.get('x-request-id')
     if (!activityId) {
         activityId = uuid();
@@ -16,8 +16,4 @@ const assignIdMiddleware = function (req, res, next) {
     }
 
     next()
-}
-
-module.exports = () => (ctx, next) => {
-    assignIdMiddleware(ctx.request, ctx.response, next)
 }
