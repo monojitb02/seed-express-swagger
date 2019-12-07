@@ -1,9 +1,9 @@
 'use strict';
 const logger = require('../logger');
 
-const logEntryMiddleware = function (req, res, next) {
+module.exports = (req, res, next) => {
     // Don't log system endpoint
-    if (req.swagger.operation['x-anonymous']) {
+    if (req.openapi.operation['x-anonymous']) {
         next()
         return
     }
@@ -12,8 +12,4 @@ const logEntryMiddleware = function (req, res, next) {
         ActivityId: req.get('x-request-id')
     });
     next();
-}
-
-module.exports = () => (ctx, next) => {
-    logEntryMiddleware(ctx.request, ctx.response, next)
 }

@@ -1,85 +1,90 @@
-swagger: "2.0"
+openapi: 3.0.1
 info:
-  version: "1.0.0"
   title: Seed API microservice
-
-basePath: /api/project/service/v1
-#
-# format of bodies a client can send (Content-Type)
-consumes:
-  - application/json
-  - text/html
-  - text/plain
-# format of the responses to the client (Accepts)
-produces:
-  - application/json
-  - text/html
-  - text/plain
-securityDefinitions:
-  basicAuth:
-    type: basic
-# To apply Basic auth to the whole API:
+  version: 1.0.0
+servers:
+- url: /api/project/service/v1
 security:
-  - basicAuth: []
+- ApiKeyAuth: []
 paths:
   /system/health:
     x-swagger-router-controller: system
     get:
-      security:
-        - {}
       x-anonymous: true
+      tags:
+      - Sytem
       description: Provides health check status
       operationId: getHealth
-      tags: [Sytem]
       responses:
-        "200":
+        200:
           description: Success
-          schema:
-            $ref: "#/definitions/HealthResponse"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HealthResponse'
   /system/version:
     x-swagger-router-controller: system
     get:
-      security:
-        - {}
       x-anonymous: true
+      tags:
+      - Sytem
       description: Provides the version number of the service
       operationId: getVersion
-      tags: [Sytem]
       responses:
-        "200":
+        200:
           description: Success
-          schema:
-            $ref: "#/definitions/VersionResponse"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VersionResponse'
   /hello/world:
     x-swagger-router-controller: hello
     get:
+      tags:
+      - Hello World
       description: Sample hello world
       operationId: helloWorld
-      tags: [Hello World]
       responses:
-        "200":
+        200:
           description: Success
-          schema:
-            $ref: "#/definitions/HelloWorld"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HelloWorld'
         default:
           description: Error
-          schema:
-            $ref: "#/definitions/ErrorResponse"
-
-# complex objects have schema definitions
-definitions:
-  VersionResponse:
-    description: Version result
-    type: string
-  HelloWorld:
-    properties:
-      success:
-        type: boolean
-      message:
-        type: string
-  HealthResponse:
-    description: Health result
-    type: string
-  ErrorResponse:
-    description: Error result
-    type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+components:
+  schemas:
+    VersionResponse:
+      description: Version details
+      type: object
+      properties:
+        version:
+          type: string
+    HelloWorld:
+      type: object
+      properties:
+        success:
+          type: boolean
+        message:
+          type: string
+    HealthResponse:
+      description: Health Response
+      type: object
+      properties:
+        status:
+          type: string
+    ErrorResponse:
+        success:
+          type: boolean
+        message:
+          type: string
+  securitySchemes:
+    ApiKeyAuth:        # arbitrary name for the security scheme
+      type: apiKey
+      in: header       # can be "header", "query" or "cookie"
+      name: x-api-key 

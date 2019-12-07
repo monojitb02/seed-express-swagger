@@ -3,7 +3,7 @@ const logger = require('../logger');
 /**
  * Sets a logger object with user context on the request.
  */
-const setLoggerMiddleware = (req, res, next) => {
+module.exports = (req, res, next) => {
     req.logger = logger.createLoggerWithUserContext(req, {
         Url: req.url,
         Method: req.method,
@@ -13,8 +13,4 @@ const setLoggerMiddleware = (req, res, next) => {
     });
 
     next();
-}
-
-module.exports = () => (ctx, next) => {
-    setLoggerMiddleware(ctx.request, ctx.response, next)
 }

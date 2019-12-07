@@ -15,16 +15,15 @@
     }
   },
   "dependencies": {
-    "body-parser": "^1.18.2",
-    "cors": "^2.7.1",
-    "express": "4.16.3",
+    "body-parser": "^1.19.0",
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
     "lodash": "^4.17.12",
     "request": "^2.88.0",
     "request-promise-native": "^1.0.8",
-    "swagger-express-mw": "^0.7.0",
-    "swagger-tools": "^0.10.4",
-    "swagger-ui-dist": "^3.24.3",
-    "winston": "^3.2.1"
+    "swagger-express-middleware": "^3.0.0-alpha.5",
+    "winston": "^3.2.1",
+    "yaml": "^1.7.2"
   },
   "devDependencies": {
     "chai": "^4.2.0",
