@@ -11,7 +11,7 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "npm run lint && npm run coverage"
+      "pre-commit": "npm run lint && npm run test"
     }
   },
   "dependencies": {
@@ -19,11 +19,8 @@
     "cors": "^2.7.1",
     "express": "4.16.3",
     "lodash": "^4.17.12",
-    "request": "^2.88.0",
-    "request-promise-native": "^1.0.8",
     "swagger-express-mw": "^0.7.0",
     "swagger-tools": "^0.10.4",
-    "swagger-ui-dist": "^3.24.3",
     "winston": "^3.2.1"
   },
   "devDependencies": {
